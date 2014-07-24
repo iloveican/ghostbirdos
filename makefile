@@ -13,4 +13,4 @@ all:
 	
 
 run:
-	qemu-system-i386 -fda os.img
+	qemu-system-i386 -fda os.img -hda FAT32.vhd
