@@ -1,7 +1,7 @@
 ;Copyright 2013-2014 by 2013-2014 by Explorer OS Developer. All rights reserved.
 
 ;Explorer 0.01 x86平台硬件抽象层
-;File name:Explorer\Kernel\HAL\x86\fun_asm.asm
+;File name:Explorer/Kernel/HAL/x86/fun_asm.asm
 ;2014.7.14 1:03 PM
 
 %include	"include/address.asm"

@@ -1,13 +1,13 @@
 /*Copyright 2013-2014 by 2013-2014 by Explorer OS Developer. All rights reserved.
 
 Explorer 0.01 x86平台硬件抽象层
-File name:Explorer\Kernel\HAL\x86\fun_c.c
+File name:Explorer/Kernel/HAL/x86/fun_c.c
 2014.7.14 1:06 PM
 */
 
 #include "../../include/HAL/x86/function.h"
 
-void inti_arch(void)
+void init_arch(void)
 {
 /*
 	clean_GDT();

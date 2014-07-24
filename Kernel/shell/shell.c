@@ -1,16 +1,25 @@
+/*
+ *Copyright 2013-2014 by Explorer Developer.
+ *made by 迷彩红星<1@GhostBirdOS.org>
+ *Explorer 原始调试界面
+ *ExplorerOS\Kernel\shell\shell.c
+ *version:Alpha
+ *7/5/2014 7:08 PM
+ */
+ 
 #include "../include/shell.h"
-
+#include "../include/macro.h"
 
 struct shell{
-	unsigned int x;
-	unsigned int y;
-	unsigned int width;
-	unsigned int height;
-	unsigned int cursor;
-	unsigned int size;
-	unsigned int color;
+	u32 x;
+	u32 y;
+	u32 width;
+	u32 height;
+	u32 cursor;
+	u32 size;
+	u32 color;
 }shell;
-void inti_shell(void)
+void init_shell(void)
 {
 	shell.width = 80;
 	shell.height = 25;
@@ -25,7 +34,7 @@ void inti_shell(void)
 	printk("Copyright 2013-2014 by Explorer Developer. All rights reserved.\n");
 	color(0xffffff);
 }
-void debug(unsigned int *address, unsigned int size)
+void debug(u32 *address, u32 size)
 {
 	printk("debug:from 0x%X to 0x%X is:\n", address, address+size);
 	for (; size > 0; size -= 4)
@@ -35,13 +44,13 @@ void debug(unsigned int *address, unsigned int size)
 	}
 }
 /*设置颜色*/
-void color(unsigned int color)
+void color(u32 color)
 {
 	shell.color = color;
 }
 
 /*输出字*/
-void put_font(unsigned char ascii)
+void put_font(u8 ascii)
 {
 	if (shell.cursor >= shell.size) {
 	return;
@@ -53,7 +62,7 @@ void put_font(unsigned char ascii)
 		return;
 	}else{
 	/*由模拟文本模式参数到实际图形模式的转换*/
-	int x, y;
+	u32 x, y;
 	x = shell.x + (shell.cursor % shell.width) * 8;
 	y = shell.y + (shell.cursor / shell.width) * 16;
 	/*调用显示函数*/
@@ -63,10 +72,10 @@ void put_font(unsigned char ascii)
 	}
 }
 /*显示字*/
-void draw_font(unsigned int x, unsigned int y, unsigned int color, unsigned int ascii)
+void draw_font(u32 x, u32 y, u32 color, u32 ascii)
 {
-	int p, i, font_offset;/*字库偏移量*/
-	char d;
+	u32 p, i, font_offset;/*字库偏移量*/
+	u8 d;
 	font_offset = ascii * 16;
 	for (i = 0; i < 16; i++)
 	{

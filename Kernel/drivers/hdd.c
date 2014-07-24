@@ -7,22 +7,23 @@
  */
  
 #include "../include/hdd.h"
+#include "../include/macro.h"
 
 
 unsigned int LBA_start;
 
-void inti_hdd(void)
+void init_hdd(void)
 {
-	char *point;
+	u8 *point;
 	point = (char *) kmalloc(512);
 	read_disk(0, (unsigned short int*) point, 1);
 	kmemcpy((point + 0x1be + 8), &LBA_start, 2);
 	kfree(point, 512);
 }
 
-void read_disk(unsigned int LBA, unsigned short int *buffer, unsigned short int number)
+void read_disk(u32 LBA, u16 *buffer, u32 number)
 {
-	int point;
+	u32 sector_offset, offset;
 	io_out16(0x1f2,number);/*数量*/
 	io_out8(0x1f3,(LBA & 0xff));/*LBA地址7~0*/
 	io_out8(0x1f4,((LBA >> 8) & 0xff));/*LBA地址15~8*/
@@ -30,11 +31,19 @@ void read_disk(unsigned int LBA, unsigned short int *buffer, unsigned short int 
 	io_out8(0x1f6,(((LBA >> 24) & 0xff) + 0xe0));/*LBA地址27~24 + LBA模式，主硬盘*/
 	io_out8(0x1f7,0x20);/*读扇区*/
 	
-	for (; (io_in8(0x1f7) & 0x88) != 0x08;)/*循环等待*/
+	for (; number != 0; number --)
 	{
+		hdd_wait();
+		for (offset = 0; offset < 256; offset += 1)
+		{
+			buffer[sector_offset + offset] = io_in16(0x1f0);
+		}
+		sector_offset += 256;
 	}
-	for (point = 0; point < (number * 256); point += 1)
-	{
-		buffer[point] = io_in16(0x1f0);
-	}
+	return;
+}
+
+void hdd_wait(void)
+{
+	for (; (io_in8(0x1f7) & 0x88) != 0x08;);/*循环等待*/
 }

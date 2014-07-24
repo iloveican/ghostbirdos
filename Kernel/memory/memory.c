@@ -1,7 +1,7 @@
 /*Explorer 0.01 内存管理部分代码*/
 #include "../include/address.h"
 #include "../include/memory.h"
-#include "../include/address.h"
+#include "../include/macro.h"
 
 int *pdt;
 int *pt;
@@ -16,7 +16,7 @@ struct k_mem_map{
 	unsigned int end;
 }(*k_mem_map);
 
-/*void inti_memory(void)功能：
+/*void init_memory(void)功能：
 	建立内核可分配内存区间表
 		依据内存可分配区间表建立256MB的内核空间可分配内存区间表
 	将内存可分配区间表的低256MB设为占用
@@ -25,7 +25,7 @@ struct k_mem_map{
 		建立页表
 */
 	
-void inti_memory(void)
+void init_memory(void)
 {
 	/*使两个表指针指向内存空间*/
 	mem_map = (struct mem_map *) mem_map_addr;
@@ -123,9 +123,9 @@ unsigned int vremap(unsigned int vir_addr, unsigned int phy_addr, unsigned int s
 	return 0;
 }
 
-void kmemcpy(char *source, char *object, unsigned int count)
+void kmemcpy(u8 *source, u8 *object, u32 count)
 {
-	int i;
+	unsigned int i;
 	for(i = 0; i < count; i ++)
 	{
 		object[i] = source[i];
