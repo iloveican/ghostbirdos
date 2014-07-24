@@ -11,6 +11,9 @@ all:
 	sudo cp KERNEL  /mnt
 	sudo umount /mnt
 	
+clean:
+	cd Boot && make clean
+	cd Kernel && make clean
 
 run:
 	qemu-system-i386 -fda os.img -hda FAT32.vhd

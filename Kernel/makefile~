@@ -29,4 +29,4 @@ all:
 	tmp/test.o
 	objcopy -R .note -R .comment -S -O binary tmp/kernel.o tmp/kernel.bin
 	cat tmp/loader.bin >> tmp/kernel.bin 
-	cp  tmp/kernel.bin KERNEL
+	cp  tmp/kernel.bin ../KERNEL
