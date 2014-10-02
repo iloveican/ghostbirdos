@@ -19,8 +19,9 @@ all:
 	gcc -c drivers/vedio.c -o tmp/vedio.o $(CFLAGS)
 	gcc -c HAL/x86/fun_c.c -o tmp/fun_c.o $(CFLAGS)
 	gcc -c fs/fat32/fat32.c -o tmp/fat32.o $(CFLAGS)
+	g++ -c C++/test.cpp -o tmp/test.o   $(CFLAGS)
 
-	ld  $(LFLAGS) -o tmp/kernel.o	-Ttext 0x11000 \
+	ld  $(LFLAGS) -s -o tmp/kernel.o	-Ttext 0x11000 \
 	tmp/_start.o tmp/main.o \
 	tmp/shell.o tmp/font.o tmp/shell_asm.o \
 	tmp/hdd.o tmp/vedio.o \
